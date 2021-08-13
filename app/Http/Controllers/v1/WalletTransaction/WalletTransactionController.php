@@ -13,9 +13,23 @@ class WalletTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function transactionHistory()
     {
-        //
+        $transactionHistory = WalletTransaction::with(['sender', 'receiver'])->paginate(20);
+
+        if(!$transactionHistory){
+            return response()->json([
+                'error' => true,
+                'message' => 'No Transaction History found',
+                'data' => null
+            ], 400);
+        }
+
+        return response()->json([
+            'error' => false,
+            'message' => null,
+            'data' => $transactionHistory
+        ], 200);
     }
 
     /**
@@ -28,59 +42,4 @@ class WalletTransactionController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\WalletTransaction  $walletTransaction
-     * @return \Illuminate\Http\Response
-     */
-    public function show(WalletTransaction $walletTransaction)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\WalletTransaction  $walletTransaction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(WalletTransaction $walletTransaction)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\WalletTransaction  $walletTransaction
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, WalletTransaction $walletTransaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\WalletTransaction  $walletTransaction
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(WalletTransaction $walletTransaction)
-    {
-        //
-    }
 }

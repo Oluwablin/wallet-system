@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
@@ -19,6 +20,7 @@ class UserSeeder
     {
         $users = [
             [
+                'id' => 1,
                 'firstname'     => 'test1',
                 'lastname'     => 'user1',
                 'email'    => 'testuser1@yopmail.com',
@@ -28,6 +30,7 @@ class UserSeeder
                 'remember_token' => Str::random(10),
             ],
             [
+                'id' => 2,
                 'firstname'     => 'test2',
                 'lastname'     => 'user2',
                 'email'    => 'testuser2@yopmail.com',
@@ -37,6 +40,7 @@ class UserSeeder
                 'remember_token' => Str::random(10),
             ],
             [
+                'id' => 3,
                 'firstname'     => 'test3',
                 'lastname'     => 'user3',
                 'email'    => 'testuser3@yopmail.com',
@@ -63,6 +67,13 @@ class UserSeeder
                     'password'          => $user['password'],
                     'remember_token'          => $user['remember_token'],
                 ]);
+                if($newUser){
+                    Wallet::create([
+                        'user_id' => $user['id'],
+                        'code' => Str::random(10),
+                        'balance' => 0,
+                    ]);
+                }
             }
         }
     }

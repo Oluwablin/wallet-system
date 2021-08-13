@@ -43,12 +43,39 @@ Route::group(['prefix' => 'v1'], function () {
         Route::post('login', 'AuthController@login');
     });
 
+    //Authentication
     Route::group(['middleware' => 'auth:api', 'namespace' => 'App\Http\Controllers\v1\Auth','prefix' => 'auth'], function ($router) {
         Route::post('logout', 'AuthController@logout');
         Route::post('refresh', 'AuthController@refresh');
         Route::post('me', 'AuthController@me');
 
     });
+
+    //WalletTransaction
+    Route::group(['middleware' => 'auth:api', 'namespace' => 'App\Http\Controllers\v1\WalletTransaction','prefix' => 'wallet/transaction'], function ($router) {
+        Route::get('history', 'WalletTransactionController@transactionHistory');
+    });
+
+    //User
+    Route::group(['middleware' => 'auth:api', 'namespace' => 'App\Http\Controllers\v1\User','prefix' => 'customer'], function ($router) {
+        Route::get('/', 'UserController@index');
+    });
+
+    //Wallet
+    Route::group(['middleware' => 'auth:api', 'namespace' => 'App\Http\Controllers\v1\Wallet','prefix' => 'wallet'], function ($router) {
+        Route::post('fund', 'WalletController@fundWallet');
+        Route::post('transfer', 'WalletController@transferFunds');
+    });
+
+    // Paystack Gateway
+    Route::group(['middleware' => 'auth:api', 'namespace' => 'App\Http\Controllers\v1\PaystackTransaction','prefix' => 'transaction'], function ($router) {
+        Route::get('payment/callback', 'PaystackTransactionController@handleGatewayCallback');
+        //Route::post('pay','PaystackTransactionController@initialize');
+        Route::get('verify/fund','PaystackTransactionController@verifyFundWallet');
+        Route::get('verify/transfer','PaystackTransactionController@verifyTransferWallet');
+
+    });
+
 
     Route::fallback(function () {
         return response()->json([

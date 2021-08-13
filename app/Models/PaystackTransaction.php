@@ -15,7 +15,7 @@ class PaystackTransaction extends Model
      * @var array
      */
     protected $fillable = [
-        'customer_id', 'reference', 'status', 'amount', 'paid_at'
+        'user_id', 'reference', 'status', 'amount', 'paid_at',
     ];
 
     /**

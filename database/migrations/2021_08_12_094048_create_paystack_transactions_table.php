@@ -20,6 +20,7 @@ class CreatePaystackTransactionsTable extends Migration
             $table->string('status');
             $table->string('amount');
             $table->string('paid_at');
+            $table->boolean('paid')->default(false);
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');

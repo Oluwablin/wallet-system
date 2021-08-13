@@ -14,9 +14,7 @@ class Wallet extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'code', 'balance',
-    ];
+    protected $guarded = [];
 
     /**
      * RELATIONSHIPS
